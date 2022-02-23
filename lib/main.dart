@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:menubar/menubar.dart' as menubar;
 
 void main() {
   runApp(const MyApp());
@@ -6,34 +7,33 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Windows Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const MyHomePage(
-        title: 'Windows Demo',
-      ),
-    );
+    return const FluentApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Image Searcher',
+        home: AppHome(
+          title: 'Image Searh',
+        ));
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class AppHome extends StatelessWidget {
   final String title;
-  const MyHomePage({Key? key, this.title = ''}) : super(key: key);
+  const AppHome({Key? key, required this.title}) : super(key: key);
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-    );
+    menubar.setApplicationMenu([
+      menubar.Submenu(
+          label: 'Search',
+          children: [menubar.MenuItem(label: 'Search...', onClicked: () => {})])
+    ]);
+    return Container(
+        color: Colors.white,
+        child: const Center(
+          child: Text('Search for Photos using the Search menu'),
+        ));
   }
 }
