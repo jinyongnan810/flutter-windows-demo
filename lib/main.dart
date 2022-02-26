@@ -1,8 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:menubar/menubar.dart' as menubar;
+import 'package:provider/provider.dart';
+import 'package:windows_demo/providers/photos.dart';
 import 'package:windows_demo/widgets/photo_search_dialog.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -11,12 +15,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FluentApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Image Searcher',
-        home: AppHome(
-          title: 'Image Searh',
-        ));
+    return MultiProvider(
+        providers: [ChangeNotifierProvider(create: (ctx) => Photos())],
+        child: const FluentApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Image Searcher',
+            home: AppHome(
+              title: 'Image Searh',
+            )));
   }
 }
 
@@ -33,8 +39,10 @@ class AppHome extends StatelessWidget {
             onClicked: () => {
                   showDialog(
                       context: context,
-                      builder: (context) =>
-                          PhotoSearchDialog(callback: (text) {}))
+                      builder: (context) => PhotoSearchDialog(callback: (text) {
+                            Provider.of<Photos>(context, listen: false)
+                                .search(text);
+                          }))
                 })
       ])
     ]);
