@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:menubar/menubar.dart' as menubar;
 import 'package:provider/provider.dart';
 import 'package:windows_demo/providers/photos.dart';
+import 'package:windows_demo/widgets/photo_display.dart';
 import 'package:windows_demo/widgets/photo_search_dialog.dart';
 
 Future<void> main() async {
@@ -46,10 +47,6 @@ class AppHome extends StatelessWidget {
                 })
       ])
     ]);
-    return Container(
-        color: Colors.white,
-        child: const Center(
-          child: Text('Search for Photos using the Search menu'),
-        ));
+    return Container(color: Colors.white, child: const PhotoDisplay());
   }
 }
