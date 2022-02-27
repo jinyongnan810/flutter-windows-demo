@@ -7,8 +7,18 @@ import 'package:windows_demo/models/photo.dart';
 
 class Photos extends ChangeNotifier {
   List<Photo> _photos = [];
+  Photo? _selectedPhoto;
   List<Photo> get photos {
     return [..._photos];
+  }
+
+  Photo? get selectedPhoto {
+    return _selectedPhoto;
+  }
+
+  void selectPhoto(Photo? photo) {
+    _selectedPhoto = photo;
+    notifyListeners();
   }
 
   Future<void> search(String text) async {
@@ -24,6 +34,7 @@ class Photos extends ChangeNotifier {
     final List<Photo> photos =
         results.map((photo) => Photo.fromJson(photo)).toList();
     _photos = photos;
+    _selectedPhoto = photos.isNotEmpty ? photos.first : null;
     notifyListeners();
   }
 }
