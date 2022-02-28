@@ -2,6 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:windows_demo/models/photo.dart';
 import 'package:windows_demo/providers/photos.dart';
+import 'package:windows_demo/widgets/photo_detail.dart';
 import 'package:windows_demo/widgets/split.dart';
 
 class PhotoDisplay extends StatefulWidget {
@@ -34,7 +35,7 @@ class _PhotoDisplayState extends State<PhotoDisplay> {
             secondChild: Center(
                 child: selectedPhoto == null
                     ? Container()
-                    : Image.network(selectedPhoto.url)),
+                    : PhotoDetail(photo: selectedPhoto)),
           );
   }
 
