@@ -4,13 +4,15 @@ class Photo {
   final String downloadUrl;
   final String description;
   final String userName;
+  final String userRef;
 
   Photo(
       {required this.id,
       required this.url,
       required this.downloadUrl,
       required this.description,
-      required this.userName});
+      required this.userName,
+      required this.userRef});
 
   factory Photo.fromJson(Map<String, dynamic> json) {
     return Photo(
@@ -19,6 +21,7 @@ class Photo {
       downloadUrl: json['links']['download'],
       description: json['description'] ?? 'No description',
       userName: json['user']['name'],
+      userRef: json['user']['username'],
     );
   }
 }
