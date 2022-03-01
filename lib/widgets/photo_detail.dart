@@ -78,6 +78,15 @@ class _PhotoDetailState extends State<PhotoDetail> {
             padding: const EdgeInsets.only(left: 10),
             child: Row(children: [
               _buildContributerInfo(),
+              const SizedBox(
+                width: 10,
+              ),
+              IconButton(
+                  icon: const Icon(
+                    FluentIcons.arrow_download_20_regular,
+                    size: 20,
+                  ),
+                  onPressed: () => {widget.photo.save()})
             ]),
           )
         ],
