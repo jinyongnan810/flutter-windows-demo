@@ -9,7 +9,7 @@ class Photo {
   final String description;
   final String userName;
   final String userRef;
-  Future<void> save() async {
+  Future<String> save() async {
     final path = await getSavePath(
       suggestedName: '$id.jpg',
       acceptedTypeGroups: [
@@ -28,7 +28,9 @@ class Photo {
       });
       final photoFile = XFile.fromData(bytes, mimeType: 'image/jpeg');
       await photoFile.saveTo(path);
+      return path;
     }
+    return '';
   }
 
   Photo(

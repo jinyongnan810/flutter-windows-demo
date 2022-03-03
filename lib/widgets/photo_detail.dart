@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:fluent_ui/fluent_ui.dart' hide FluentIcons;
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart' show Card, BorderSide;
 import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:windows_demo/models/photo.dart';
 
 class PhotoDetail extends StatefulWidget {
@@ -86,7 +89,26 @@ class _PhotoDetailState extends State<PhotoDetail> {
                     FluentIcons.arrow_download_20_regular,
                     size: 20,
                   ),
-                  onPressed: () => {widget.photo.save()})
+                  onPressed: () async {
+                    final path = await widget.photo.save();
+                    showSnackbar(
+                        context,
+                        Snackbar(
+                          content: const Text('Saved'),
+                          action: TextButton(
+                            child: const Text('Show in Explorer'),
+                            onPressed: () {
+                              final parts = path.split(Platform.pathSeparator);
+                              parts.removeLast();
+                              final dir = Uri.directory(
+                                  parts.join(Platform.pathSeparator),
+                                  windows: true);
+                              launch(dir.toString());
+                            },
+                          ),
+                        ),
+                        duration: const Duration(seconds: 10));
+                  })
             ]),
           )
         ],
